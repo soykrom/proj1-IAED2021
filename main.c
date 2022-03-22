@@ -60,7 +60,7 @@ time makeTime(char inputTime[4]);
 
 void addAirport(airport newAirpt);
 void printAirports(airport airport);
-int findAirport(char IDA[3]);
+int findAirport(char IDA[4]);
 
 void addFlight(flight newFlight);
 
@@ -83,7 +83,7 @@ void printAirport(airport airport) {
         airport.IDA, airport.country, airport.city, airport.nFlights);
 }
 
-int findAirport(char IDA[3]) {
+int findAirport(char IDA[4]) {
     int i = 0;
 
     for(i = 0; i < nAirpts; i++)
@@ -95,7 +95,7 @@ int findAirport(char IDA[3]) {
 
 //So gross to make the exact same function twice. Easily solvable with pointers
 
-int equalAirport(char IDA[3]) {
+int equalAirport(char IDA[4]) {
     for(int i = 0; i < nAirpts; i++)
         if(!strcmp(listAirpts[i].IDA, IDA))
             return 1;
@@ -204,6 +204,22 @@ void command_l() {
     if(getchar() == '\n') 
         for(int i = 0; i < nAirpts; i ++)
             printAirport(listAirpts[i]);
+    else {
+        do {
+            char IDA[4] = {0};
+            int pos = 0;
 
+            scanf("%s", IDA);
+
+            pos = findAirport(IDA);
+
+            if(pos == nAirpts)
+                printf("%s: no such airport ID\n", IDA);
+            else
+                printAirport(listAirpts[pos]);
+
+        } while (getchar() != '\n');
+
+    }
     //TODO Receive list of IDAs and only print those. Error message
 }
